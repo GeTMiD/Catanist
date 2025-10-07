@@ -5,8 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Hexagon, Plus, Trash2 } from "lucide-react";
+import { Hexagon, Plus } from "lucide-react";
 import Navigation from "@/components/Navigation";
+import ImageUpload from "@/components/ImageUpload";
 import { useToast } from "@/hooks/use-toast";
 
 const Create = () => {
@@ -17,6 +18,7 @@ const Create = () => {
   const [choices, setChoices] = useState<string[]>(["", "", "", "", "", ""]);
   const [correctChoice, setCorrectChoice] = useState(0);
   const [explanation, setExplanation] = useState("");
+  const [puzzleImageUrl, setPuzzleImageUrl] = useState<string>("");
 
   const updateChoice = (index: number, value: string) => {
     const newChoices = [...choices];
@@ -34,7 +36,19 @@ const Create = () => {
       return;
     }
 
-    // In a real app, this would save to Supabase
+    // In a real app, this would save to Supabase including the image URL
+    const puzzleData = {
+      title,
+      description,
+      difficulty,
+      choices,
+      correctChoice,
+      explanation,
+      imageUrl: puzzleImageUrl || null,
+    };
+
+    console.log("Puzzle data to save:", puzzleData);
+
     toast({
       title: "Puzzle created!",
       description: "Your puzzle has been saved and is ready for the community",
@@ -47,6 +61,7 @@ const Create = () => {
     setChoices(["", "", "", "", "", ""]);
     setCorrectChoice(0);
     setExplanation("");
+    setPuzzleImageUrl("");
   };
 
   return (
@@ -89,6 +104,19 @@ const Create = () => {
                 onChange={(e) => setDescription(e.target.value)}
                 rows={4}
               />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Puzzle Image (Optional)</Label>
+              <ImageUpload
+                onImageUpload={(url) => setPuzzleImageUrl(url)}
+                currentImage={puzzleImageUrl}
+                onImageRemove={() => setPuzzleImageUrl("")}
+                userId="temp-user-id"
+              />
+              <p className="text-xs text-muted-foreground">
+                Upload a screenshot of the board state to help players visualize the puzzle
+              </p>
             </div>
 
             <div className="space-y-2">
