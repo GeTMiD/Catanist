@@ -48,12 +48,12 @@ const Index = () => {
         <div className="container relative mx-auto px-4 py-24 text-center">
           <div className="flex flex-col items-center mb-6">
             <Hexagon className="w-20 h-20 text-primary animate-pulse" />
-            <span className="mt-2 font-bold text-lg">Catanist</span>
+            <span className="mt-3 font-bold text-xl text-primary">Catanist</span>
           </div>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-[var(--gradient-hero)] bg-clip-text text-transparent">
             Master Catan Strategy
           </h1>
-          <p className="text-xl text-black mb-8 max-w-2xl mx-auto">
+          <p className="text-xl font-semibold text-black mb-8 max-w-2xl mx-auto">
             Sharpen your decision-making skills with community-created puzzles.
             Build boards, solve scenarios, and become a better Catan player.
           </p>
@@ -71,6 +71,7 @@ const Index = () => {
           </div>
         </div>
       </section>
+      <div className="h-10 bg-gradient-to-b from-black/50 to-[#f5f1ea]" />
 
       {/* Features Section */}
       <section className="py-20 bg-muted/30">
