@@ -15,7 +15,7 @@ const Navigation = () => {
   return (
     <nav className="border-b border-border bg-card shadow-sm">
       <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center">
           <Link to="/" className="flex items-center gap-2 group">
             <Hexagon className="w-8 h-8 text-primary group-hover:rotate-45 transition-transform duration-300" />
             <span className="text-xl font-bold bg-[var(--gradient-hero)] bg-clip-text text-primary">
