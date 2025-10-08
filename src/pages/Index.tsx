@@ -34,11 +34,11 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        <div 
-          className="absolute inset-0 opacity-20"
+        <div
+          className="absolute inset-0 opacity-40"
           style={{
             backgroundImage: `url(${heroImage})`,
             backgroundSize: 'cover',
@@ -46,30 +46,32 @@ const Index = () => {
           }}
         />
         <div className="container relative mx-auto px-4 py-24 text-center">
-          <div className="flex justify-center mb-6">
+          <div className="flex flex-col items-center mb-6">
             <Hexagon className="w-20 h-20 text-primary animate-pulse" />
+            <span className="mt-3 font-bold text-xl text-primary">Catanist</span>
           </div>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-[var(--gradient-hero)] bg-clip-text text-transparent">
             Master Catan Strategy
           </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Sharpen your decision-making skills with community-created puzzles. 
+          <p className="text-xl font-semibold text-black mb-8 max-w-2xl mx-auto">
+            Sharpen your decision-making skills with community-created puzzles.
             Build boards, solve scenarios, and become a better Catan player.
           </p>
           <div className="flex gap-4 justify-center">
             <Link to="/puzzles">
-              <Button variant="hero" size="lg">
+              <Button variant="hero" size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
                 Start Solving
               </Button>
             </Link>
             <Link to="/create">
-              <Button variant="secondary" size="lg">
+              <Button variant="hero" size="lg" className="bg-green-600 hover:bg-green-700 text-white">
                 Create Puzzle
               </Button>
             </Link>
           </div>
         </div>
       </section>
+      <div className="h-10 bg-gradient-to-b from-black/50 to-[#f5f1ea]" />
 
       {/* Features Section */}
       <section className="py-20 bg-muted/30">
