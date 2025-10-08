@@ -18,8 +18,8 @@ const Navigation = () => {
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 group">
             <Hexagon className="w-8 h-8 text-primary group-hover:rotate-45 transition-transform duration-300" />
-            <span className="text-xl font-bold bg-[var(--gradient-hero)] bg-clip-text text-transparent">
-              Catan Puzzle Trainer
+            <span className="text-xl font-bold bg-[var(--gradient-hero)] bg-clip-text text-primary">
+              Catanist
             </span>
           </Link>
           
