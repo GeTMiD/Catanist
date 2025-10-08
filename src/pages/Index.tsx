@@ -59,7 +59,7 @@ const Index = () => {
           </p>
           <div className="flex gap-4 justify-center">
             <Link to="/puzzles">
-              <Button variant="hero" size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
+              <Button variant="primary" size="lg" className="">
                 Start Solving
               </Button>
             </Link>
