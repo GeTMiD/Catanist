@@ -9,6 +9,7 @@ import { Hexagon, Plus } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import ImageUpload from "@/components/ImageUpload";
 
 const Create = () => {
   const { toast } = useToast();
@@ -18,6 +19,7 @@ const Create = () => {
   const [choices, setChoices] = useState<string[]>(["", "", "", "", "", ""]);
   const [correctChoice, setCorrectChoice] = useState(0);
   const [explanation, setExplanation] = useState("");
+  const [puzzleImageUrl, setPuzzleImageUrl] = useState<string>("");
 
   const updateChoice = useCallback((index: number, value: string) => {
     setChoices(prev => {
@@ -31,8 +33,9 @@ const Create = () => {
     setCorrectChoice(index);
   }, []);
 
-  const handleSubmit = useCallback(async () => {
-    if (!title || !description || choices.some(c => !c)) {
+  const handleSubmit = async () => {
+   if (!title.trim() || !description.trim() || choices.some(c => !c.trim()))
+ {
       toast({
         title: "Incomplete puzzle",
         description: "Please fill in all fields",
@@ -48,32 +51,33 @@ const Create = () => {
       choices,
       correctChoice,
       explanation,
+      image_url: puzzleImageUrl || null,
     };
 
-    try {
-      console.log(puzzleData)
-      await supabase.from("puzzles_test").insert(puzzleData);
-      toast({
-        title: "Puzzle created!",
-        description: "Your puzzle has been saved and is ready for the community",
-      });
+    const { error } = await supabase.from("puzzles_test").insert(puzzleData);
 
-      // Reset form
-      setTitle("");
-      setDescription("");
-      setDifficulty("Easy");
-      setChoices(["", "", "", "", "", ""]);
-      setCorrectChoice(0);
-      setExplanation("");
-
-    } catch (error) {
+    if (error) {
       toast({
         title: "Error",
-        description: "Failed to create puzzle",
+        description: error.message,
         variant: "destructive",
       });
+      return;
     }
-  }, [title, description, difficulty, choices, correctChoice, explanation, toast]);
+
+    toast({
+      title: "Puzzle created!",
+      description: "Your puzzle has been saved and is ready for the community",
+    });
+
+    setTitle("");
+    setDescription("");
+    setDifficulty("Easy");
+    setChoices(["", "", "", "", "", ""]);
+    setCorrectChoice(0);
+    setExplanation("");
+    setPuzzleImageUrl("");
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -96,6 +100,15 @@ const Create = () => {
             <CardDescription>Provide information about your puzzle scenario</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
+
+
+            <ImageUpload
+              userId="temp-user-id"
+              currentImage={puzzleImageUrl}
+              onImageUpload={(url) => setPuzzleImageUrl(url)}
+              onImageRemove={() => setPuzzleImageUrl("")}
+            />
+
             <div className="space-y-2">
               <Label htmlFor="title">Puzzle Title</Label>
               <Input
