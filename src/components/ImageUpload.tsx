@@ -25,8 +25,7 @@ const ImageUpload = ({ userId, currentImage, onImageUpload, onImageRemove }: Ima
 
       const fileExt = file.name.split(".").pop();
       const fileName = `${userId}-${Date.now()}.${fileExt}`;
-      const filePath = `puzzles/${fileName}`;
-
+      const filePath = `puzzles/${fileName}`;    
       const { error } = await supabase.storage.from("puzzle_images").upload(filePath, file);
 
       if (error) throw error;
