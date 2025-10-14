@@ -3,9 +3,4 @@ Puzzle game for catan, meant to help improve in catan decision making, in the sp
 
 I started this project after finding myself wanting to practice catan game logic, but without wanting to commit to an entire game, as well as to develop specfic scenarios.
 
-I used this project as a way to hybrid manual development with vibe coding tools, the first quick front end deployment was done with loveable and then improved manually where needed.
-
-Stack - 
-
-Front End -  TypeScript, React - deployed with Vite
-Backend - TBD, for now im experimenting with supabase
+I used this project as a way to test what I think the future of Web Development might look like - an abstraction of basic work with fine tuning where needed, so one developer is able to orchestrate a large application with many parts, mostly using different AI tools.
