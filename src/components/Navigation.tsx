@@ -1,38 +1,39 @@
-import { Link, useLocation } from "react-router-dom";
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Hexagon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const Navigation = () => {
-  const location = useLocation();
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/puzzles", label: "Puzzles" },
+  { href: "/create", label: "Create" },
+  { href: "/progress", label: "Progress" },
+];
 
-  const links = [
-    { to: "/", label: "Home" },
-    { to: "/puzzles", label: "Puzzles" },
-    { to: "/create", label: "Create" },
-    { to: "/progress", label: "Progress" },
-  ];
+export default function Navigation() {
+  const pathname = usePathname();
 
   return (
     <nav className="border-b border-border bg-card shadow-sm">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center">
-          <Link to="/" className="flex items-center gap-2 group">
+          <Link href="/" className="flex items-center gap-2 group">
             <Hexagon className="w-8 h-8 text-primary group-hover:rotate-45 transition-transform duration-300" />
             <span className="text-xl font-bold bg-[var(--gradient-hero)] bg-clip-text text-primary">
               Catanist
             </span>
           </Link>
-          
+
           <div className="flex items-center gap-6">
             {links.map((link) => (
               <Link
-                key={link.to}
-                to={link.to}
+                key={link.href}
+                href={link.href}
                 className={cn(
                   "text-sm font-medium transition-colors hover:text-primary",
-                  location.pathname === link.to
-                    ? "text-primary"
-                    : "text-muted-foreground"
+                  pathname === link.href ? "text-primary" : "text-muted-foreground"
                 )}
               >
                 {link.label}
@@ -43,6 +44,4 @@ const Navigation = () => {
       </div>
     </nav>
   );
-};
-
-export default Navigation;
+}

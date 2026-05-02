@@ -11,8 +11,6 @@ import { Hexagon, Plus } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import ImageUpload from "@/components/ImageUpload";
-
 export default function CreatePage() {
   const { toast } = useToast();
   const [title, setTitle] = useState("");
@@ -21,7 +19,6 @@ export default function CreatePage() {
   const [choices, setChoices] = useState<string[]>(["", "", "", "", "", ""]);
   const [correctChoice, setCorrectChoice] = useState(0);
   const [explanation, setExplanation] = useState("");
-  const [puzzleImageUrl, setPuzzleImageUrl] = useState<string>("");
 
   const updateChoice = useCallback((index: number, value: string) => {
     setChoices((prev) => {
@@ -52,10 +49,9 @@ export default function CreatePage() {
       choices,
       correctChoice,
       explanation,
-      image_url: puzzleImageUrl || null,
     };
 
-    const { error } = await supabase.from("puzzles_test").insert(puzzleData);
+    const { error } = await supabase.from("puzzles").insert(puzzleData);
 
     if (error) {
       toast({
@@ -77,7 +73,6 @@ export default function CreatePage() {
     setChoices(["", "", "", "", "", ""]);
     setCorrectChoice(0);
     setExplanation("");
-    setPuzzleImageUrl("");
   };
 
   return (
@@ -101,12 +96,13 @@ export default function CreatePage() {
             <CardDescription>Provide information about your puzzle scenario</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            <ImageUpload
-              userId="temp-user-id"
-              currentImage={puzzleImageUrl}
-              onImageUpload={(url) => setPuzzleImageUrl(url)}
-              onImageRemove={() => setPuzzleImageUrl("")}
-            />
+            {/* Board builder will go here */}
+            <Card className="bg-muted/30">
+              <CardContent className="py-8 text-center text-muted-foreground">
+                <Hexagon className="w-10 h-10 mx-auto mb-2" />
+                Board Builder (coming soon)
+              </CardContent>
+            </Card>
 
             <div className="space-y-2">
               <Label htmlFor="title">Puzzle Title</Label>
