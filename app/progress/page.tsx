@@ -1,36 +1,34 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Hexagon, Trophy, Target, TrendingUp } from "lucide-react";
-import Navigation from "@/components/Navigation";
 
-const Progress = () => {
-  // Mock data - will be replaced with real tracking
-  const stats = {
-    totalSolved: 42,
-    correctRate: 76,
-    streak: 5,
-    byDifficulty: [
-      { level: "Easy", solved: 20, correct: 18 },
-      { level: "Experienced", solved: 15, correct: 11 },
-      { level: "Advanced", solved: 7, correct: 5 },
-      { level: "Pro", solved: 0, correct: 0 },
-    ],
-  };
+// Mock data - will be replaced with real tracking
+const stats = {
+  totalSolved: 42,
+  correctRate: 76,
+  streak: 5,
+  byDifficulty: [
+    { level: "Easy", solved: 20, correct: 18 },
+    { level: "Experienced", solved: 15, correct: 11 },
+    { level: "Advanced", solved: 7, correct: 5 },
+    { level: "Pro", solved: 0, correct: 0 },
+  ],
+};
 
-  const getDifficultyColor = (level: string) => {
-    switch (level) {
-      case "Easy": return "bg-secondary text-secondary-foreground";
-      case "Experienced": return "bg-accent text-accent-foreground";
-      case "Advanced": return "bg-primary text-primary-foreground";
-      case "Pro": return "bg-destructive text-destructive-foreground";
-      default: return "bg-muted";
-    }
-  };
+const getDifficultyColor = (level: string) => {
+  switch (level) {
+    case "Easy": return "bg-secondary text-secondary-foreground";
+    case "Experienced": return "bg-accent text-accent-foreground";
+    case "Advanced": return "bg-primary text-primary-foreground";
+    case "Pro": return "bg-destructive text-destructive-foreground";
+    default: return "bg-muted";
+  }
+};
 
+export default function ProgressPage() {
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
-      
+
       <div className="container mx-auto px-4 py-12">
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-4 flex items-center gap-3">
@@ -91,17 +89,13 @@ const Progress = () => {
                 <div key={index} className="space-y-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <Badge className={getDifficultyColor(diff.level)}>
-                        {diff.level}
-                      </Badge>
-                      <span className="text-sm text-muted-foreground">
-                        {diff.solved} solved
-                      </span>
+                      <Badge className={getDifficultyColor(diff.level)}>{diff.level}</Badge>
+                      <span className="text-sm text-muted-foreground">{diff.solved} solved</span>
                     </div>
                     <span className="font-semibold">{rate}%</span>
                   </div>
                   <div className="h-2 bg-muted rounded-full overflow-hidden">
-                    <div 
+                    <div
                       className="h-full bg-primary transition-all"
                       style={{ width: `${rate}%` }}
                     />
@@ -127,6 +121,4 @@ const Progress = () => {
       </div>
     </div>
   );
-};
-
-export default Progress;
+}

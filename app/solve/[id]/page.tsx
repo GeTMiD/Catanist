@@ -1,14 +1,16 @@
+"use client";
+
 import { useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Hexagon, CheckCircle, XCircle, ArrowLeft } from "lucide-react";
-import Navigation from "@/components/Navigation";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import Link from "next/link";
 
-const SolvePuzzle = () => {
-  const { id } = useParams();
+export default function SolvePuzzlePage() {
+  const { id } = useParams<{ id: string }>();
   const [selectedChoice, setSelectedChoice] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
 
@@ -16,7 +18,8 @@ const SolvePuzzle = () => {
   const puzzle = {
     id: id || "1",
     title: "The Longest Road Decision",
-    description: "You have 4 wood and 4 brick. The current longest road is 6 segments held by blue player. You have 5 connected road segments. Where should you build to secure longest road and the 2 victory points?",
+    description:
+      "You have 4 wood and 4 brick. The current longest road is 6 segments held by blue player. You have 5 connected road segments. Where should you build to secure longest road and the 2 victory points?",
     difficulty: "Easy",
     creator: "CatanMaster",
     choices: [
@@ -28,7 +31,8 @@ const SolvePuzzle = () => {
       "Build settlement on high-number tiles for resource generation",
     ],
     correctChoice: 1,
-    explanation: "Building two roads extending your current path gives you 7 total road segments, beating blue's 6 and securing the longest road bonus (2 VP). This is the most efficient use of your wood and brick resources for immediate victory points.",
+    explanation:
+      "Building two roads extending your current path gives you 7 total road segments, beating blue's 6 and securing the longest road bonus (2 VP). This is the most efficient use of your wood and brick resources for immediate victory points.",
   };
 
   const handleSelectChoice = (index: number) => {
@@ -49,10 +53,8 @@ const SolvePuzzle = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
-      
       <div className="container mx-auto px-4 py-12 max-w-4xl">
-        <Link to="/puzzles">
+        <Link href="/puzzles">
           <Button variant="ghost" className="mb-6">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Puzzles
@@ -62,12 +64,8 @@ const SolvePuzzle = () => {
         <Card className="bg-[var(--gradient-card)] mb-6">
           <CardHeader>
             <div className="flex items-start justify-between mb-2">
-              <Badge className={getDifficultyColor()}>
-                {puzzle.difficulty}
-              </Badge>
-              <span className="text-sm text-muted-foreground">
-                by {puzzle.creator}
-              </span>
+              <Badge className={getDifficultyColor()}>{puzzle.difficulty}</Badge>
+              <span className="text-sm text-muted-foreground">by {puzzle.creator}</span>
             </div>
             <CardTitle className="text-3xl">{puzzle.title}</CardTitle>
           </CardHeader>
@@ -79,7 +77,8 @@ const SolvePuzzle = () => {
             <div className="flex flex-col items-center justify-center gap-4">
               <Hexagon className="w-20 h-20 text-muted-foreground" />
               <p className="text-muted-foreground text-center">
-                Interactive Catan board visualization<br />
+                Interactive Catan board visualization
+                <br />
                 <span className="text-sm">(Board builder coming soon)</span>
               </p>
             </div>
@@ -145,12 +144,12 @@ const SolvePuzzle = () => {
             </DialogDescription>
           </DialogHeader>
           <div className="flex gap-3 mt-6">
-            <Link to="/puzzles" className="flex-1">
+            <Link href="/puzzles" className="flex-1">
               <Button variant="outline" className="w-full">
                 Back to Puzzles
               </Button>
             </Link>
-            <Link to="/puzzles" className="flex-1">
+            <Link href="/puzzles" className="flex-1">
               <Button variant="default" className="w-full">
                 Next Puzzle
               </Button>
@@ -160,6 +159,4 @@ const SolvePuzzle = () => {
       </Dialog>
     </div>
   );
-};
-
-export default SolvePuzzle;
+}

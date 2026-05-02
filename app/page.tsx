@@ -1,48 +1,46 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Hexagon, Brain, Trophy, Users } from "lucide-react";
-import { Link } from "react-router-dom";
-import Navigation from "@/components/Navigation";
+import Link from "next/link";
 import heroImage from "@/assets/hero-catan.jpg";
 
-const Index = () => {
-  const features = [
-    {
-      icon: Brain,
-      title: "Strategic Puzzles",
-      description: "Practice decision-making with real Catan scenarios created by the community",
-    },
-    {
-      icon: Trophy,
-      title: "Track Progress",
-      description: "Monitor your improvement across difficulty levels and puzzle types",
-    },
-    {
-      icon: Users,
-      title: "Community Driven",
-      description: "Create, solve, and discuss puzzles with Catan enthusiasts worldwide",
-    },
-  ];
+const features = [
+  {
+    icon: Brain,
+    title: "Strategic Puzzles",
+    description: "Practice decision-making with real Catan scenarios created by the community",
+  },
+  {
+    icon: Trophy,
+    title: "Track Progress",
+    description: "Monitor your improvement across difficulty levels and puzzle types",
+  },
+  {
+    icon: Users,
+    title: "Community Driven",
+    description: "Create, solve, and discuss puzzles with Catan enthusiasts worldwide",
+  },
+];
 
-  const difficulties = [
-    { level: "Easy", color: "bg-secondary" },
-    { level: "Experienced", color: "bg-accent" },
-    { level: "Advanced", color: "bg-primary" },
-    { level: "Pro", color: "bg-destructive" },
-  ];
+const difficulties = [
+  { level: "Easy", color: "bg-secondary" },
+  { level: "Experienced", color: "bg-accent" },
+  { level: "Advanced", color: "bg-primary" },
+  { level: "Pro", color: "bg-destructive" },
+];
 
+export default function Home() {
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         <div
           className="absolute inset-0 opacity-40"
           style={{
-            backgroundImage: `url(${heroImage})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            backgroundImage: `url(${heroImage.src})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
           }}
         />
         <div className="container relative mx-auto px-4 py-24 text-center">
@@ -58,12 +56,12 @@ const Index = () => {
             Build boards, solve scenarios, and become a better Catan player.
           </p>
           <div className="flex gap-4 justify-center">
-            <Link to="/puzzles">
-              <Button variant="primary" size="lg" className="">
+            <Link href="/puzzles">
+              <Button variant="primary" size="lg">
                 Start Solving
               </Button>
             </Link>
-            <Link to="/create">
+            <Link href="/create">
               <Button variant="hero" size="lg" className="bg-green-600 hover:bg-green-700 text-white">
                 Create Puzzle
               </Button>
@@ -119,7 +117,7 @@ const Index = () => {
           <p className="text-xl mb-8 opacity-90">
             Join the community and start solving puzzles today
           </p>
-          <Link to="/puzzles">
+          <Link href="/puzzles">
             <Button size="lg" className="bg-white text-primary hover:bg-white/90">
               Browse Puzzles
             </Button>
@@ -128,6 +126,4 @@ const Index = () => {
       </section>
     </div>
   );
-};
-
-export default Index;
+}

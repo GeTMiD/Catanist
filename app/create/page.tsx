@@ -1,3 +1,7 @@
+"use client";
+
+export const dynamic = "force-dynamic";
+
 import { useState, useCallback } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -6,12 +10,9 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Hexagon, Plus } from "lucide-react";
-import Navigation from "@/components/Navigation";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import ImageUpload from "@/components/ImageUpload";
-
-const Create = () => {
+export default function CreatePage() {
   const { toast } = useToast();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -19,10 +20,9 @@ const Create = () => {
   const [choices, setChoices] = useState<string[]>(["", "", "", "", "", ""]);
   const [correctChoice, setCorrectChoice] = useState(0);
   const [explanation, setExplanation] = useState("");
-  const [puzzleImageUrl, setPuzzleImageUrl] = useState<string>("");
 
   const updateChoice = useCallback((index: number, value: string) => {
-    setChoices(prev => {
+    setChoices((prev) => {
       const newChoices = [...prev];
       newChoices[index] = value;
       return newChoices;
@@ -34,8 +34,7 @@ const Create = () => {
   }, []);
 
   const handleSubmit = async () => {
-   if (!title.trim() || !description.trim() || choices.some(c => !c.trim()))
- {
+    if (!title.trim() || !description.trim() || choices.some((c) => !c.trim())) {
       toast({
         title: "Incomplete puzzle",
         description: "Please fill in all fields",
@@ -49,12 +48,11 @@ const Create = () => {
       description,
       difficulty,
       choices,
-      correctChoice,
+      correct_choice: correctChoice,
       explanation,
-      image_url: puzzleImageUrl || null,
     };
 
-    const { error } = await supabase.from("puzzles_test").insert(puzzleData);
+    const { error } = await supabase.from("puzzles").insert(puzzleData);
 
     if (error) {
       toast({
@@ -76,12 +74,10 @@ const Create = () => {
     setChoices(["", "", "", "", "", ""]);
     setCorrectChoice(0);
     setExplanation("");
-    setPuzzleImageUrl("");
   };
 
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
 
       <div className="container mx-auto px-4 py-12 max-w-4xl">
         <div className="mb-8">
@@ -100,14 +96,13 @@ const Create = () => {
             <CardDescription>Provide information about your puzzle scenario</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-
-
-            <ImageUpload
-              userId="temp-user-id"
-              currentImage={puzzleImageUrl}
-              onImageUpload={(url) => setPuzzleImageUrl(url)}
-              onImageRemove={() => setPuzzleImageUrl("")}
-            />
+            {/* Board builder will go here */}
+            <Card className="bg-muted/30">
+              <CardContent className="py-8 text-center text-muted-foreground">
+                <Hexagon className="w-10 h-10 mx-auto mb-2" />
+                Board Builder (coming soon)
+              </CardContent>
+            </Card>
 
             <div className="space-y-2">
               <Label htmlFor="title">Puzzle Title</Label>
@@ -129,8 +124,6 @@ const Create = () => {
                 rows={4}
               />
             </div>
-
-
 
             <div className="space-y-2">
               <Label htmlFor="difficulty">Difficulty Level</Label>
@@ -184,20 +177,7 @@ const Create = () => {
             <div className="pt-4">
               <Button
                 onClick={handleSubmit}
-                className="
-      w-full bg-[hsl(var(--primary))] hover:bg-[hsl(16 65% 38%)] 
-      text-white 
-      font-semibold 
-      text-lg 
-      rounded-xl 
-      shadow-[var(--shadow-game)] 
-      hover:shadow-[var(--shadow-hover)] 
-      transition-all 
-      duration-300 
-      flex 
-      items-center 
-      justify-center
-    "
+                className="w-full bg-[hsl(var(--primary))] hover:bg-[hsl(16_65%_38%)] text-white font-semibold text-lg rounded-xl shadow-[var(--shadow-game)] hover:shadow-[var(--shadow-hover)] transition-all duration-300 flex items-center justify-center"
               >
                 <Plus className="mr-2 h-5 w-5" />
                 Create Puzzle
@@ -217,6 +197,4 @@ const Create = () => {
       </div>
     </div>
   );
-};
-
-export default Create;
+}

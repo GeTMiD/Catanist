@@ -1,10 +1,11 @@
+"use client";
+
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Hexagon, Filter } from "lucide-react";
-import Navigation from "@/components/Navigation";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 type Difficulty = "Easy" | "Experienced" | "Advanced" | "Pro";
 
@@ -17,56 +18,55 @@ interface Puzzle {
   solvedCount: number;
 }
 
-const Puzzles = () => {
+const getDifficultyColor = (difficulty: Difficulty) => {
+  switch (difficulty) {
+    case "Easy": return "bg-secondary text-secondary-foreground";
+    case "Experienced": return "bg-accent text-accent-foreground";
+    case "Advanced": return "bg-primary text-primary-foreground";
+    case "Pro": return "bg-destructive text-destructive-foreground";
+  }
+};
+
+// Mock data - will be replaced with Supabase
+const puzzles: Puzzle[] = [
+  {
+    id: "1",
+    title: "The Longest Road Decision",
+    description: "You have 4 wood and 4 brick. Where should you build to secure longest road?",
+    difficulty: "Easy",
+    creator: "CatanMaster",
+    solvedCount: 234,
+  },
+  {
+    id: "2",
+    title: "Resource Optimization",
+    description: "Limited resources, multiple options. What's the optimal play?",
+    difficulty: "Experienced",
+    creator: "StrategyPro",
+    solvedCount: 156,
+  },
+  {
+    id: "3",
+    title: "Blocking the Leader",
+    description: "Your opponent is 2 points from victory. How do you stop them?",
+    difficulty: "Advanced",
+    creator: "TacticalGenius",
+    solvedCount: 89,
+  },
+];
+
+const difficulties: (Difficulty | "All")[] = ["All", "Easy", "Experienced", "Advanced", "Pro"];
+
+export default function PuzzlesPage() {
   const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty | "All">("All");
 
-  // Mock data - will be replaced with Supabase
-  const puzzles: Puzzle[] = [
-    {
-      id: "1",
-      title: "The Longest Road Decision",
-      description: "You have 4 wood and 4 brick. Where should you build to secure longest road?",
-      difficulty: "Easy",
-      creator: "CatanMaster",
-      solvedCount: 234,
-    },
-    {
-      id: "2",
-      title: "Resource Optimization",
-      description: "Limited resources, multiple options. What's the optimal play?",
-      difficulty: "Experienced",
-      creator: "StrategyPro",
-      solvedCount: 156,
-    },
-    {
-      id: "3",
-      title: "Blocking the Leader",
-      description: "Your opponent is 2 points from victory. How do you stop them?",
-      difficulty: "Advanced",
-      creator: "TacticalGenius",
-      solvedCount: 89,
-    },
-  ];
-
-  const difficulties: (Difficulty | "All")[] = ["All", "Easy", "Experienced", "Advanced", "Pro"];
-
-  const filteredPuzzles = selectedDifficulty === "All" 
-    ? puzzles 
-    : puzzles.filter(p => p.difficulty === selectedDifficulty);
-
-  const getDifficultyColor = (difficulty: Difficulty) => {
-    switch (difficulty) {
-      case "Easy": return "bg-secondary text-secondary-foreground";
-      case "Experienced": return "bg-accent text-accent-foreground";
-      case "Advanced": return "bg-primary text-primary-foreground";
-      case "Pro": return "bg-destructive text-destructive-foreground";
-    }
-  };
+  const filteredPuzzles = selectedDifficulty === "All"
+    ? puzzles
+    : puzzles.filter((p) => p.difficulty === selectedDifficulty);
 
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
-      
+
       <div className="container mx-auto px-4 py-12">
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-4 flex items-center gap-3">
@@ -99,8 +99,8 @@ const Puzzles = () => {
         {/* Puzzles Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredPuzzles.map((puzzle) => (
-            <Card 
-              key={puzzle.id} 
+            <Card
+              key={puzzle.id}
               className="bg-[var(--gradient-card)] hover:shadow-[var(--shadow-hover)] transition-[var(--transition-smooth)] cursor-pointer"
             >
               <CardHeader>
@@ -117,10 +117,8 @@ const Puzzles = () => {
               </CardHeader>
               <CardContent>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">
-                    by {puzzle.creator}
-                  </span>
-                  <Link to={`/solve/${puzzle.id}`}>
+                  <span className="text-sm text-muted-foreground">by {puzzle.creator}</span>
+                  <Link href={`/solve/${puzzle.id}`}>
                     <Button variant="secondary" size="sm">
                       Solve Puzzle
                     </Button>
@@ -140,6 +138,4 @@ const Puzzles = () => {
       </div>
     </div>
   );
-};
-
-export default Puzzles;
+}
