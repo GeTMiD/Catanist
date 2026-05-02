@@ -6,7 +6,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Hexagon, CheckCircle, XCircle, ArrowLeft } from "lucide-react";
-import Navigation from "@/components/Navigation";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import Link from "next/link";
 
@@ -54,8 +53,6 @@ export default function SolvePuzzlePage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
-
       <div className="container mx-auto px-4 py-12 max-w-4xl">
         <Link href="/puzzles">
           <Button variant="ghost" className="mb-6">

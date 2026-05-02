@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Hexagon, Brain, Trophy, Users } from "lucide-react";
 import Link from "next/link";
-import Navigation from "@/components/Navigation";
 import heroImage from "@/assets/hero-catan.jpg";
 
 const features = [
@@ -33,7 +32,6 @@ const difficulties = [
 export default function Home() {
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden">

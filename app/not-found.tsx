@@ -1,11 +1,9 @@
-import Navigation from "@/components/Navigation";
 import { AlertTriangle, Hexagon } from "lucide-react";
 import Link from "next/link";
 
 export default function NotFound() {
   return (
     <>
-      <Navigation />
       <div className="flex min-h-screen items-center justify-center bg-gray-100">
         <div className="flex flex-col items-center justify-center min-h-screen text-center space-y-4">
           <div className="relative">

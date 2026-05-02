@@ -1,5 +1,4 @@
 // Server client — use this in Server Components, Route Handlers, and Server Actions.
-// Reads the session from cookies so auth works server-side without exposing the service key.
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import type { Database } from "./types";
@@ -9,7 +8,7 @@ export async function createSupabaseServerClient() {
 
   return createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
     {
       cookies: {
         getAll() {

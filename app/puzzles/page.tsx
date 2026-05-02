@@ -5,7 +5,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Hexagon, Filter } from "lucide-react";
-import Navigation from "@/components/Navigation";
 import Link from "next/link";
 
 type Difficulty = "Easy" | "Experienced" | "Advanced" | "Pro";
@@ -67,7 +66,6 @@ export default function PuzzlesPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
 
       <div className="container mx-auto px-4 py-12">
         <div className="mb-8">

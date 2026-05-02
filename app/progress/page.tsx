@@ -1,7 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Hexagon, Trophy, Target, TrendingUp } from "lucide-react";
-import Navigation from "@/components/Navigation";
 
 // Mock data - will be replaced with real tracking
 const stats = {
@@ -29,7 +28,6 @@ const getDifficultyColor = (level: string) => {
 export default function ProgressPage() {
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
 
       <div className="container mx-auto px-4 py-12">
         <div className="mb-8">
