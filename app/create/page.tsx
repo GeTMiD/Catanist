@@ -47,7 +47,7 @@ export default function CreatePage() {
       description,
       difficulty,
       choices,
-      correctChoice,
+      correct_choice: correctChoice,
       explanation,
     };
 
