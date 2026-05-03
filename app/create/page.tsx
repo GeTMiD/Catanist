@@ -12,6 +12,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Hexagon, Plus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import type { Json } from "@/integrations/supabase/types";
+import BoardBuilder, { defaultBoardLayout } from "@/components/BoardBuilder";
+import type { BoardLayout } from "@/components/BoardBuilder";
 export default function CreatePage() {
   const { toast } = useToast();
   const [title, setTitle] = useState("");
@@ -20,6 +23,7 @@ export default function CreatePage() {
   const [choices, setChoices] = useState<string[]>(["", "", "", "", "", ""]);
   const [correctChoice, setCorrectChoice] = useState(0);
   const [explanation, setExplanation] = useState("");
+  const [boardLayout, setBoardLayout] = useState<BoardLayout>(defaultBoardLayout);
 
   const updateChoice = useCallback((index: number, value: string) => {
     setChoices((prev) => {
@@ -50,6 +54,7 @@ export default function CreatePage() {
       choices,
       correct_choice: correctChoice,
       explanation,
+      board_layout: boardLayout as unknown as Json,
     };
 
     const { error } = await supabase.from("puzzles").insert(puzzleData);
@@ -74,6 +79,7 @@ export default function CreatePage() {
     setChoices(["", "", "", "", "", ""]);
     setCorrectChoice(0);
     setExplanation("");
+    setBoardLayout(defaultBoardLayout());
   };
 
   return (
@@ -96,13 +102,10 @@ export default function CreatePage() {
             <CardDescription>Provide information about your puzzle scenario</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            {/* Board builder will go here */}
-            <Card className="bg-muted/30">
-              <CardContent className="py-8 text-center text-muted-foreground">
-                <Hexagon className="w-10 h-10 mx-auto mb-2" />
-                Board Builder (coming soon)
-              </CardContent>
-            </Card>
+            <div>
+              <Label className="mb-2 block">Board Layout</Label>
+              <BoardBuilder value={boardLayout} onChange={setBoardLayout} />
+            </div>
 
             <div className="space-y-2">
               <Label htmlFor="title">Puzzle Title</Label>
@@ -186,14 +189,6 @@ export default function CreatePage() {
           </CardContent>
         </Card>
 
-        <Card className="mt-6 bg-muted/30">
-          <CardHeader>
-            <CardTitle className="text-lg">Board Builder (Coming Soon)</CardTitle>
-            <CardDescription>
-              Visual hex-based board builder will allow you to create custom Catan boards
-            </CardDescription>
-          </CardHeader>
-        </Card>
       </div>
     </div>
   );
